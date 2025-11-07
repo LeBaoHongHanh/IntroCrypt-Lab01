@@ -7,7 +7,7 @@
 using std::string;
 using std::vector;
 
-class big_int
+class BigInt
 {
 private:
   // Dùng vector để lưu các "chữ số"
@@ -28,28 +28,28 @@ private:
 
 public:
   // --- NHÓM 1: HÀM KHỞI TẠO (CONSTRUCTORS) & GÁN CƠ BẢN ---
-  // Yêu cầu: Cần để tạo biến big_int
+  // Yêu cầu: Cần để tạo biến BigInt
 
-  big_int();                   // Hàm khởi tạo mặc định (tạo số 0)
-  big_int(long long v);        // Khởi tạo từ số long long (ví dụ: g = 2)
-  big_int(const string &s);    // Khởi tạo từ một chuỗi (hữu ích cho debug)
-  void operator=(long long v); // Gán một số long long cho big_int (ví dụ: result = 1)
+  BigInt();                    // Hàm khởi tạo mặc định (tạo số 0)
+  BigInt(long long v);         // Khởi tạo từ số long long (ví dụ: g = 2)
+  BigInt(const string &s);     // Khởi tạo từ một chuỗi (hữu ích cho debug)
+  void operator=(long long v); // Gán một số long long cho BigInt (ví dụ: result = 1)
 
   // --- NHÓM 2: CÁC TOÁN TỬ SO SÁNH ---
   // Yêu cầu: Cần cho logic vòng lặp và kiểm tra điều kiện
 
   // So sánh (a > b)
-  bool operator>(const big_int &b) const;
+  bool operator>(const BigInt &b) const;
   // So sánh (a < b)
-  bool operator<(const big_int &b) const;
+  bool operator<(const BigInt &b) const;
   // So sánh (a == b) - [Dùng để kiểm tra alice_secret == bob_secret]
-  bool operator==(const big_int &b) const;
+  bool operator==(const BigInt &b) const;
   // So sánh (a != b)
-  bool operator!=(const big_int &b) const;
+  bool operator!=(const BigInt &b) const;
   // So sánh (a >= b)
-  bool operator>=(const big_int &b) const;
+  bool operator>=(const BigInt &b) const;
   // So sánh (a <= b)
-  bool operator<=(const big_int &b) const;
+  bool operator<=(const BigInt &b) const;
 
   // Kiểm tra số có bằng 0 không? - [Rất quan trọng cho modular_exponentiation]
   bool isZero() const;
@@ -57,25 +57,25 @@ public:
   // So sánh với số nhỏ (ví dụ: while (exponent > 0))
   bool operator>(long long v) const;
 
-  // --- NHÓM 3: CÁC TOÁN TỬ SỐ HỌC CƠ BẢN (big_int vs big_int) ---
+  // --- NHÓM 3: CÁC TOÁN TỬ SỐ HỌC CƠ BẢN (BigInt vs BigInt) ---
   // Yêu cầu: Đây là "trái tim" của thư viện
 
   // Phép cộng (a + b)
-  big_int operator+(const big_int &b) const;
+  BigInt operator+(const BigInt &b) const;
   // Phép trừ (a - b) - [Dùng để tính p-1 và p-2]
-  big_int operator-(const big_int &b) const;
+  BigInt operator-(const BigInt &b) const;
   // Phép nhân (a * b) - [Rất quan trọng cho modular_exponentiation]
-  big_int operator*(const big_int &b) const;
+  BigInt operator*(const BigInt &b) const;
   // Phép chia (a / b) - [Dùng để tính (p-1)/2]
-  big_int operator/(const big_int &b) const;
+  BigInt operator/(const BigInt &b) const;
   // Phép chia lấy dư (a % b) - [Rất quan trọng cho modular_exponentiation]
-  big_int operator%(const big_int &b) const;
+  BigInt operator%(const BigInt &b) const;
 
   // --- NHÓM 4: TOÁN TỬ VỚI SỐ NHỎ (TỐI ƯU HÓA) ---
   // Yêu cầu: Giúp code trong hàm modular_exponentiation sạch hơn
 
   // Chia cho số int (ví dụ: exponent / 2)
-  big_int operator/(int v) const;
+  BigInt operator/(int v) const;
   // Chia lấy dư với số int (ví dụ: exponent % 2)
   int operator%(int v) const;
 
@@ -83,7 +83,7 @@ public:
   // Yêu cầu: Cần để std::cout ra kết quả cuối cùng
 
   // Hàm "friend" để cho phép std::cout truy cập vào private members
-  friend std::ostream &operator<<(std::ostream &stream, const big_int &v);
-  // Hàm "friend" để đọc big_int từ std::cin
-  friend std::istream &operator>>(std::istream &stream, big_int &v);
+  friend std::ostream &operator<<(std::ostream &stream, const BigInt &v);
+  // Hàm "friend" để đọc BigInt từ std::cin
+  friend std::istream &operator>>(std::istream &stream, BigInt &v);
 };
