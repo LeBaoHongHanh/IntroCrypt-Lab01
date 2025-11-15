@@ -1,10 +1,10 @@
 #pragma once
 
-#include "BigInt.h" // Bắt buộc phải include BigInt vì chúng ta dùng nó
+#include "BigInt.h"
 
 /**
  * ======================================================================
- * CÁC HÀM MẬT MÃ (THEO YÊU CẦU BÀI TẬP)
+ * CÁC HÀM MẬT MÃ
  * ======================================================================
  */
 

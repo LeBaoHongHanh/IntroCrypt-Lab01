@@ -2,8 +2,6 @@
 #include <cstdlib>
 #include <ctime>
 #include <stdexcept>
-
-// --- BAO GỒM CÁC FILE TỰ VIẾT ---
 #include "BigInt.h"
 #include "crypto_utils.h"
 
@@ -15,24 +13,20 @@ int main()
     // QUAN TRỌNG: Chỉ gọi srand() 1 lần duy nhất
     srand(time(NULL));
 
-    std::cout << "=========================================" << std::endl;
-    std::cout << "  CHUONG TRINH DIFFIE-HELLMAN KEY EXCHANGE" << std::endl;
-    std::cout << "=========================================" << std::endl
+    std::cout << "============================================" << std::endl;
+    std::cout << "  CHUONG TRINH DIFFIE-HELLMAN KEY EXCHANGE  " << std::endl;
+    std::cout << "============================================" << std::endl
               << std::endl;
 
     // --- BƯỚC 1: SINH SỐ NGUYÊN TỐ LỚN p VÀ PHẦN TỬ SINH g ---
-
-    // LƯU Ý VỀ KÍCH THƯỚC:
-    // - 64-128 bit: Rất nhanh (vài giây) - Tốt cho test
+    // - 64-128 bit: Rất nhanh
     // - 256 bit: Vài phút - Vẫn chấp nhận được
-    // - 512 bit: 3-15 phút - Cần kiên nhẫn!
-    // - 1024 bit: Rất lâu (>30 phút) - Không khuyến khích
+    // - 512 bit: 3-5 phút
 
-    int bit_size = 512; // Bắt đầu với 128 bit để test
+    int bit_size = 512;
 
     std::cout << "[BUOC 1] Sinh so nguyen to an toan p" << std::endl;
     std::cout << "         Kich thuoc: " << bit_size << " bit" << std::endl;
-    std::cout << "         (Qua trinh nay co the mat vai phut...)" << std::endl;
     std::cout << "-----------------------------------------" << std::endl;
 
     // Đo thời gian sinh số nguyên tố
@@ -112,7 +106,7 @@ int main()
 
     if (alice_shared_secret == bob_shared_secret)
     {
-      std::cout << "  ✓ THANH CONG!" << std::endl;
+      std::cout << "  THANH CONG!" << std::endl;
       std::cout << "  Alice va Bob da thoa thuan duoc bi mat chung!" << std::endl;
       std::cout << "  Shared Secret = " << alice_shared_secret << std::endl;
     }
@@ -131,13 +125,6 @@ int main()
     std::cout << "   + Kich thuoc p: " << bit_size << " bit" << std::endl;
     std::cout << "   + Thoi gian sinh p: " << elapsed << " giay" << std::endl;
     std::cout << "   + Phan tu sinh g: " << g << std::endl;
-    std::cout << std::endl;
-
-    std::cout << "[GHI CHU]" << std::endl;
-    std::cout << "   Trong thuc te, Alice va Bob chi trao doi A va B." << std::endl;
-    std::cout << "   Cac khoa rieng (a, b) va shared secret chi ho biet." << std::endl;
-    std::cout << "   Ke tan cong chi thay duoc: p, g, A, B" << std::endl;
-    std::cout << "   => Rat kho tinh duoc shared secret tu cac gia tri nay!" << std::endl;
     std::cout << std::endl;
   }
   catch (const std::exception &e)

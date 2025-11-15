@@ -6,7 +6,7 @@
 #include <sstream>
 
 // ========================================================================
-// HÀM 1: MODULAR EXPONENTIATION (Bình phương và nhân)
+// HÀM 1: MODULAR EXPONENTIATION
 // ========================================================================
 BigInt modular_exponentiation(BigInt base, BigInt exponent, BigInt mod)
 {
@@ -15,22 +15,17 @@ BigInt modular_exponentiation(BigInt base, BigInt exponent, BigInt mod)
 
   while (exponent > 0)
   {
-    // Nếu exponent là số lẻ
     if (exponent % 2 == 1)
     {
       result = (result * base) % mod;
     }
-    // Bình phương base
+
     base = (base * base) % mod;
-    // Chia đôi exponent
     exponent = exponent / 2;
   }
   return result;
 }
 
-// ========================================================================
-// HÀM HỖ TRỢ: SINH SỐ NGẪU NHIÊN N BIT (VERSION AN TOÀN)
-// ========================================================================
 BigInt generate_random_bigint(int bit_size)
 {
   if (bit_size <= 0)
@@ -39,16 +34,12 @@ BigInt generate_random_bigint(int bit_size)
     return BigInt(0);
   }
 
-  // Tính số chữ số thập phân cần thiết
-  // 2^bit_size có khoảng bit_size * log10(2) chữ số
   int num_digits = (int)(bit_size * 0.30103) + 2;
 
   std::string s = "";
 
-  // Chữ số đầu không được là 0
   s += char('1' + rand() % 9);
 
-  // Sinh các chữ số còn lại
   for (int i = 1; i < num_digits; i++)
   {
     s += char('0' + rand() % 10);
@@ -56,7 +47,6 @@ BigInt generate_random_bigint(int bit_size)
 
   BigInt result(s);
 
-  // Đảm bảo số là lẻ (để có thể là số nguyên tố)
   if (result % 2 == 0)
   {
     result = result + 1;
@@ -65,27 +55,26 @@ BigInt generate_random_bigint(int bit_size)
   return result;
 }
 
+int small_primes[] = {
+    2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
+    73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
+    157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
+    239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
+    331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419,
+    421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503,
+    509, 521, 523, 541};
+
 // ========================================================================
 // HÀM HỖ TRỢ: KIỂM TRA SỐ NGUYÊN TỐ VỚI TRIAL DIVISION
 // ========================================================================
 bool is_divisible_by_small_primes(const BigInt &n)
 {
-  // Danh sách 100 số nguyên tố đầu tiên
-  int small_primes[] = {
-      2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71,
-      73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151,
-      157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
-      239, 241, 251, 257, 263, 269, 271, 277, 281, 283, 293, 307, 311, 313, 317,
-      331, 337, 347, 349, 353, 359, 367, 373, 379, 383, 389, 397, 401, 409, 419,
-      421, 431, 433, 439, 443, 449, 457, 461, 463, 467, 479, 487, 491, 499, 503,
-      509, 521, 523, 541};
-
   for (int p : small_primes)
   {
     if (n == BigInt(p))
-      return false; // Chính nó là số nguyên tố
+      return false;
     if (n % p == 0)
-      return true; // Chia hết -> không phải số nguyên tố
+      return true;
   }
   return false;
 }
@@ -95,7 +84,6 @@ bool is_divisible_by_small_primes(const BigInt &n)
 // ========================================================================
 bool miller_rabin_test(const BigInt &n, int iterations)
 {
-  // Xử lý các trường hợp đặc biệt
   if (n == 2 || n == 3)
     return true;
   if (n < 2 || n % 2 == 0)
@@ -110,9 +98,7 @@ bool miller_rabin_test(const BigInt &n, int iterations)
     r++;
   }
 
-  // Danh sách các base nhỏ để test
-  int small_primes[] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37};
-  int num_small = 12;
+  int num_small = 100;
 
   // Test với các số nguyên tố nhỏ
   for (int i = 0; i < std::min(num_small, iterations); i++)
@@ -144,9 +130,9 @@ bool miller_rabin_test(const BigInt &n, int iterations)
   return true;
 }
 
-// ========================================================================
-// HÀM 2: SINH SỐ NGUYÊN TỐ AN TOÀN (SAFE PRIME) - VERSION ĐƠN GIẢN HÓA
-// ========================================================================
+// =============================================
+// HÀM 2: SINH SỐ NGUYÊN TỐ AN TOÀN (SAFE PRIME)
+// =============================================
 BigInt generate_safe_prime(int bit_size)
 {
   std::cout << "   [INFO] Bat dau tim safe prime voi " << bit_size << " bit..." << std::endl;
